@@ -4,6 +4,7 @@ import { useTodoStore, selectEditingTodo } from '../store/todoStore'
 import { CATEGORIES, PRIORITIES, CATEGORY_LABELS, PRIORITY_LABELS } from '../types/todo'
 import type { Category, Priority } from '../types/todo'
 import { CustomSelect } from './CustomSelect'
+import { CustomDateInput } from './CustomDateInput'
 
 interface FormValues {
   title: string
@@ -161,16 +162,11 @@ export function AddTodo() {
           <label className="block text-sm font-medium text-white/70 mb-1.5">
             截止日期 <span className="text-red-400">*</span>
           </label>
-          <input
-            type="date"
+          <CustomDateInput
             value={form.dueDate}
             min={TODAY}
-            onChange={e => handleChange('dueDate', e.target.value)}
-            className={`w-full bg-white/5 border rounded-xl px-4 py-2.5 text-white
-              outline-none transition-colors [color-scheme:dark]
-              ${errors.dueDate
-                ? 'border-red-500 focus:border-red-400'
-                : 'border-white/10 focus:border-violet-500'}`}
+            onChange={v => handleChange('dueDate', v)}
+            hasError={!!errors.dueDate}
           />
           {errors.dueDate && (
             <p className="mt-1.5 text-xs text-red-400">{errors.dueDate}</p>

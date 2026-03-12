@@ -67,16 +67,20 @@ export function FilterBar() {
         />
       </div>
 
-      {isActive && (
-        <div className="mt-3 flex justify-end">
-          <button
-            onClick={resetFilter}
-            className="text-xs text-white/40 hover:text-white/70 transition-colors px-2 py-1 rounded-lg hover:bg-white/5"
-          >
-            重置筛选
-          </button>
-        </div>
-      )}
+      <div className="mt-3 flex justify-end">
+        <button
+          onClick={resetFilter}
+          disabled={!isActive}
+          className={
+            'text-xs px-2 py-1 rounded-lg transition-colors ' +
+            (isActive
+              ? 'text-white/50 hover:text-white/80 hover:bg-white/5 cursor-pointer'
+              : 'text-white/20 cursor-default')
+          }
+        >
+          重置筛选
+        </button>
+      </div>
     </div>
   )
 }
