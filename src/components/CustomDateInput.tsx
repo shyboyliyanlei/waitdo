@@ -17,8 +17,15 @@ export function CustomDateInput({ value, min, onChange, hasError }: CustomDateIn
   const [month, setMonth] = useState(value ? value.slice(5, 7) : '')
   const [day,   setDay]   = useState(value ? value.slice(8, 10) : '')
 
-  // 外部 value 重置（如 handleCancel / 编辑模式切换）
+  // 标记本次 value 变化是由内部输入触发的，跳过 useEffect 回写
+  const internalRef = useRef(false)
+
+  // 仅响应外部 value 变化（如取消编辑、切换编辑对象）
   useEffect(() => {
+    if (internalRef.current) {
+      internalRef.current = false
+      return
+    }
     if (!value) {
       setYear(''); setMonth(''); setDay('')
     } else {
@@ -28,8 +35,9 @@ export function CustomDateInput({ value, min, onChange, hasError }: CustomDateIn
     }
   }, [value])
 
-  // 三段都有值时向上通知
+  // 三段都有值时向上通知（不提前补零，等用户输完两位再输出）
   function notify(y: string, m: string, d: string) {
+    internalRef.current = true
     if (y.length === 4 && m.length >= 1 && d.length >= 1) {
       const mm = m.padStart(2, '0')
       const dd = d.padStart(2, '0')
