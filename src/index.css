@@ -12,8 +12,13 @@ option {
   background-color: #1a1a1a;
   color: #ffffff;
 }
-option:hover,
+/* 鼠标悬浮高亮跟随 */
+option:hover {
+  background-color: #7c3aed !important;
+  color: #ffffff;
+}
+/* 已选中项：不单独高亮，与普通项一致，避免固定紫色 */
 option:checked {
-  background-color: #7c3aed;
+  background-color: #1a1a1a;
   color: #ffffff;
 }
