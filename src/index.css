@@ -14,7 +14,7 @@ option {
 }
 /* 鼠标悬浮高亮跟随 */
 option:hover {
-  background-color: #7c3aed !important;
+  background-color: #8b5cf6 !important;
   color: #ffffff;
 }
 /* 已选中项：不单独高亮，与普通项一致，避免固定紫色 */
