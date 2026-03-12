@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import { useTodoStore, selectEditingTodo } from '../store/todoStore'
 import { CATEGORIES, PRIORITIES, CATEGORY_LABELS, PRIORITY_LABELS } from '../types/todo'
 import type { Category, Priority } from '../types/todo'
+import { CustomSelect } from './CustomSelect'
 
 interface FormValues {
   title: string
@@ -180,29 +181,19 @@ export function AddTodo() {
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="block text-sm font-medium text-white/70 mb-1.5">优先级</label>
-            <select
+            <CustomSelect
               value={form.priority}
-              onChange={e => handleChange('priority', e.target.value as Priority)}
-              className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white
-                outline-none focus:border-violet-500 hover:border-white/30 transition-colors [color-scheme:dark] cursor-pointer"
-            >
-              {PRIORITIES.map(p => (
-                <option key={p} value={p}>{PRIORITY_LABELS[p]}</option>
-              ))}
-            </select>
+              options={PRIORITIES.map(p => ({ value: p, label: PRIORITY_LABELS[p] }))}
+              onChange={v => handleChange('priority', v as Priority)}
+            />
           </div>
           <div>
             <label className="block text-sm font-medium text-white/70 mb-1.5">分类</label>
-            <select
+            <CustomSelect
               value={form.category}
-              onChange={e => handleChange('category', e.target.value as Category)}
-              className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white
-                outline-none focus:border-violet-500 hover:border-white/30 transition-colors [color-scheme:dark] cursor-pointer"
-            >
-              {CATEGORIES.map(c => (
-                <option key={c} value={c}>{CATEGORY_LABELS[c]}</option>
-              ))}
-            </select>
+              options={CATEGORIES.map(c => ({ value: c, label: CATEGORY_LABELS[c] }))}
+              onChange={v => handleChange('category', v as Category)}
+            />
           </div>
         </div>
 
