@@ -15,8 +15,8 @@ export function FilterBar() {
     filter.status !== DEFAULT_FILTER.status
 
   const selectClass =
-    'w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-sm text-white ' +
-    'outline-none focus:border-violet-500 transition-colors [color-scheme:dark] cursor-pointer'
+    'w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-3 py-2 text-sm text-white ' +
+    'outline-none focus:border-violet-500 hover:border-white/30 transition-colors [color-scheme:dark] cursor-pointer'
 
   return (
     <div className="bg-white/5 border border-white/10 rounded-2xl p-4">

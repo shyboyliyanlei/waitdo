@@ -6,3 +6,14 @@ body {
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
 }
+
+/* 原生 select 下拉列表（option 不响应 Tailwind class，需全局覆盖） */
+option {
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+option:hover,
+option:checked {
+  background-color: #7c3aed;
+  color: #ffffff;
+}

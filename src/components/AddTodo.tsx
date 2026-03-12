@@ -183,8 +183,8 @@ export function AddTodo() {
             <select
               value={form.priority}
               onChange={e => handleChange('priority', e.target.value as Priority)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white
-                outline-none focus:border-violet-500 transition-colors [color-scheme:dark] cursor-pointer"
+              className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white
+                outline-none focus:border-violet-500 hover:border-white/30 transition-colors [color-scheme:dark] cursor-pointer"
             >
               {PRIORITIES.map(p => (
                 <option key={p} value={p}>{PRIORITY_LABELS[p]}</option>
@@ -196,8 +196,8 @@ export function AddTodo() {
             <select
               value={form.category}
               onChange={e => handleChange('category', e.target.value as Category)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white
-                outline-none focus:border-violet-500 transition-colors [color-scheme:dark] cursor-pointer"
+              className="w-full bg-[#1a1a1a] border border-white/10 rounded-xl px-4 py-2.5 text-white
+                outline-none focus:border-violet-500 hover:border-white/30 transition-colors [color-scheme:dark] cursor-pointer"
             >
               {CATEGORIES.map(c => (
                 <option key={c} value={c}>{CATEGORY_LABELS[c]}</option>
