@@ -35,7 +35,16 @@ export function CustomDateInput({ value, min, onChange, hasError }: CustomDateIn
     }
   }, [value])
 
-  // 三段都有值时向上通知（不提前补零，等用户输完两位再输出）
+  // 获取指定年月的最大天数
+  function getMaxDay(y: string, m: string): number {
+    const yi = parseInt(y, 10)
+    const mi = parseInt(m, 10)
+    if (!yi || !mi) return 31
+    // new Date(年, 月, 0) 返回上月最后一天，即该月最大天数
+    return new Date(yi, mi, 0).getDate()
+  }
+
+  // 三段都有值时向上通知
   function notify(y: string, m: string, d: string) {
     internalRef.current = true
     if (y.length === 4 && m.length >= 1 && d.length >= 1) {
@@ -51,20 +60,31 @@ export function CustomDateInput({ value, min, onChange, hasError }: CustomDateIn
     const v = e.target.value.replace(/\D/g, '').slice(0, 4)
     setYear(v)
     notify(v, month, day)
-    // 输完 4 位自动跳月份
     if (v.length === 4) monthRef.current?.focus()
   }
 
   function handleMonth(e: React.ChangeEvent<HTMLInputElement>) {
-    const v = e.target.value.replace(/\D/g, '').slice(0, 2)
+    let v = e.target.value.replace(/\D/g, '').slice(0, 2)
+    // 限制月份不超过 12
+    if (v.length === 2 && parseInt(v, 10) > 12) v = '12'
+    // 首位大于 1 时不可能组成合法月份，直接补零并跳转
+    if (v.length === 1 && parseInt(v, 10) > 1) {
+      v = '0' + v
+    }
     setMonth(v)
     notify(year, v, day)
-    // 输完 2 位自动跳日期
     if (v.length === 2) dayRef.current?.focus()
   }
 
   function handleDay(e: React.ChangeEvent<HTMLInputElement>) {
-    const v = e.target.value.replace(/\D/g, '').slice(0, 2)
+    let v = e.target.value.replace(/\D/g, '').slice(0, 2)
+    const max = getMaxDay(year, month)
+    // 限制天数不超过当月最大天数
+    if (v.length === 2 && parseInt(v, 10) > max) v = String(max)
+    // 首位大于 3 时不可能组成合法日期，直接补零
+    if (v.length === 1 && parseInt(v, 10) > 3) {
+      v = '0' + v
+    }
     setDay(v)
     notify(year, month, v)
   }
