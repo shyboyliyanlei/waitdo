@@ -267,7 +267,7 @@ export function CustomDateInput({ value, min, onChange, hasError }: CustomDateIn
 
       {/* 日历弹窗 */}
       {showPicker && (
-        <div className="absolute top-full mt-1 right-0 bg-[#1a1a1a] border border-white/10 rounded-xl p-3 z-50 shadow-2xl shadow-black/50 w-[280px]">
+        <div className="absolute bottom-full mb-1 right-0 bg-[#1a1a1a] border border-white/10 rounded-xl p-3 z-50 shadow-2xl shadow-black/50 w-[280px]">
           {/* 月份导航 */}
           <div className="flex items-center justify-between mb-3">
             <button
