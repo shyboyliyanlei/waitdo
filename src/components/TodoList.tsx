@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTodoStore } from '../store/todoStore'
 import { CATEGORY_LABELS, PRIORITY_LABELS } from '../types/todo'
 import type { Todo } from '../types/todo'
@@ -34,6 +35,9 @@ export function TodoList() {
   const setEditingId = useTodoStore(s => s.setEditingId)
 
   const today = getTodayStr()
+
+  // 删除确认弹窗状态
+  const [confirmId, setConfirmId] = useState<string | null>(null)
 
   // 内联筛选+排序（不使用 selectFilteredTodos selector，避免 Zustand v5 useSyncExternalStore 引用不稳定导致崩溃）
   const filtered = todos
@@ -120,7 +124,7 @@ export function TodoList() {
                       ✎
                     </button>
                     <button
-                      onClick={() => deleteTodo(todo.id)}
+                      onClick={() => setConfirmId(todo.id)}
                       className="w-7 h-7 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-400/10 transition-all text-sm"
                       aria-label="删除"
                     >
@@ -159,6 +163,30 @@ export function TodoList() {
           </div>
         )
       })}
+
+      {/* 删除确认弹窗 */}
+      {confirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-[#1a1a1a] border border-white/10 rounded-2xl p-6 w-[320px] shadow-2xl">
+            <h3 className="text-base font-semibold text-white mb-2">确认删除</h3>
+            <p className="text-sm text-white/50 mb-5">删除后无法恢复，确定要删除这条任务吗？</p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setConfirmId(null)}
+                className="px-4 py-2 rounded-xl text-sm text-white/60 bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+              >
+                否
+              </button>
+              <button
+                onClick={() => { deleteTodo(confirmId); setConfirmId(null) }}
+                className="px-4 py-2 rounded-xl text-sm text-white bg-red-500/80 hover:bg-red-500 transition-colors"
+              >
+                是
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
