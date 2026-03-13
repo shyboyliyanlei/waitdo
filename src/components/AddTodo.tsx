@@ -66,6 +66,8 @@ export function AddTodo() {
     }
     if (!values.dueDate) {
       errs.dueDate = '截止日期不能为空'
+    } else if (values.dueDate < TODAY) {
+      errs.dueDate = '截止日期不能早于今天'
     }
     return errs
   }
